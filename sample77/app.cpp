@@ -18,7 +18,7 @@ private:
   Clock clock;                  // <1>
 
 #ifndef MAKE_RASPIKE
-  const int8_t pwm = (Motor::PWM_MAX) / 6;
+  const int8_t pwm = (Motor::PWM_MAX) / 2;
 #else
   const int8_t pwm = 60;
 #endif
