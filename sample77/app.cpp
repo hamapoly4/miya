@@ -1,69 +1,28 @@
-// tag::walker_def[]
-#include "app.h"
-#include "util.h"
-
-#include "Motor.h"
-#include "Clock.h"
-
+#include "app.h" // <1>
+#include "Tracer.h" // <2>
+#include "Clock.h"  // <3>
 using namespace ev3api;
 
-class Walker {
-public:
-  Walker();
-  void run();
+Tracer tracer;  // <4>
+Clock clock;    // <5>
 
-private:
-  Motor leftWheel;              // <1>
-  Motor rightWheel;             // <1>
-  Clock clock;                  // <1>
-
-#ifndef MAKE_RASPIKE
-  const int8_t pwm = (Motor::PWM_MAX) / 10;
-#else
-  const int8_t pwm = 60;
-#endif
-  const uint32_t duration = 2000*1000;
-};
-// end::walker_def[]
-// tag::walker_impl[]
-Walker::Walker():
-  leftWheel(PORT_C), rightWheel(PORT_B) {
-}
-
-void Walker::run() {
-  init_f(__FILE__);
-  while(1) {
-    msg_f("Forwarding...", 1);
-    leftWheel.setPWM(pwm);
-    rightWheel.setPWM(pwm);
-    clock.sleep(duration);
-
-    msg_f("Backwarding...", 1);
-    leftWheel.setPWM(-pwm);
-    rightWheel.setPWM(-pwm);
-    clock.sleep(duration);
-
-    // 左ボタンを長押し、それを捕捉する
-    if (ev3_button_is_pressed(LEFT_BUTTON)) {
-      break;
-    }
-  }
-
-  msg_f("Stopped.", 1);
-  leftWheel.stop();
-  rightWheel.stop();
-  while(ev3_button_is_pressed(LEFT_BUTTON)) {
-    ;
-  }
-}
-// end::walker_impl[]
-// tag::main_task[]
-void main_task(intptr_t unused) {
-
-  Walker walker;                // <1>
-
-  walker.run();                 // <2>
-
+void tracer_task(intptr_t exinf) { // <1>
+  tracer.run(); // <2>
   ext_tsk();
 }
-// end::main_task[]
+
+void main_task(intptr_t unused) { // <1>
+  const uint32_t duration = 100*1000; // <2>
+
+  tracer.init(); // <3>
+  sta_cyc(TRACER_CYC); // <4>
+  
+  while (!ev3_button_is_pressed(LEFT_BUTTON)) { // <1>
+      clock.sleep(duration);   // <2>
+  }
+
+  stp_cyc(TRACER_CYC); // <3>
+  tracer.terminate(); // <4>
+  ext_tsk(); // <5>
+}
+
