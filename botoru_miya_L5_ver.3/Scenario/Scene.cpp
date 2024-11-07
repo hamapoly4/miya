@@ -285,11 +285,13 @@ Scene::Scene(unsigned char scene_no)
 			mJudgeMent[mcurrent_scene_no] = new RotateAngleJudgeMent(LEFT, -50);	//RotateL
 			break;
 		case 17:
-		case 28:
 		case 35:
 			mJudgeMent[mcurrent_scene_no] = new RotateAngleJudgeMent(LEFT, -124);	//RotateL
 			break;
 		case 21:
+			mJudgeMent[mcurrent_scene_no] = new RotateAngleJudgeMent(LEFT, -42);	//RotateL
+			break;
+		case 28:
 			mJudgeMent[mcurrent_scene_no] = new RotateAngleJudgeMent(LEFT, -84);	//RotateL
 			break;
 			
