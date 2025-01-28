@@ -4,12 +4,12 @@
 Scenario::Scenario()
 	: mscene_no(TOP), mscene_switch_flag(false), mscenario_fin_flag(false)
 {
-	mScene[TOP] = new Scene(mscene_no);	// シーン①を確保
+	mScene[TOP] = new Scene(mscene_no);	// シーンTOPを確保
 }
 
 Scenario::~Scenario()
 {
-	delete mScene[LAST];				// シーン⑯を解放
+	delete mScene[LAST];				// シーンLASTを解放
 
 	printf("シナリオオブジェクトの解放！！\n");
 }

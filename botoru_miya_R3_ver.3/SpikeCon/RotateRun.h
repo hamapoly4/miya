@@ -9,7 +9,7 @@ private:
 	unsigned char mrota;
 
 public:
-	RotateRun(unsigned char rota, int pwm = 55);
+	RotateRun(unsigned char rota, int pwm = 60);
 	~RotateRun();
 
 	void run();
