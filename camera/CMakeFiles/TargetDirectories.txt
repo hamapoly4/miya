@@ -1,0 +1,3 @@
+/home/user/camera/CMakeFiles/rebuild_cache.dir
+/home/user/camera/CMakeFiles/edit_cache.dir
+/home/user/camera/CMakeFiles/capture2.dir
