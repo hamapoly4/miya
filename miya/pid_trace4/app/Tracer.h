@@ -21,7 +21,6 @@ public:
 private:
   Motor leftWheel;
   Motor rightWheel;
-  Motor centralWheel;
   ColorSensor colorSensor; // <3>
   GyroSensor gyrosensor;
   

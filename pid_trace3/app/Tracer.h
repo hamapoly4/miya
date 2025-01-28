@@ -6,8 +6,6 @@
 #include "util.h"        // <3>
 
 char color_set(rgb_raw_t & rgb);
-void angle_fix(int spd,int ag,int type);
-void run_straight(int spd);
 
 using namespace ev3api;  // <4>
 
@@ -21,7 +19,6 @@ public:
 private:
   Motor leftWheel;
   Motor rightWheel;
-  Motor centralWheel;
   ColorSensor colorSensor; // <3>
   GyroSensor gyrosensor;
   

@@ -1,10 +1,10 @@
 #include "Tracer.h" // <1>
-#define MOT_CON 10
+#define MOT_CON 20
 
 static int left = 45 ,right = 45;
 static int l_def_cnt,r_def_cnt;
-int left_cnt,right_cnt,angle,sonar=0;
-char color,dir,dir_con=0;
+int left_cnt,right_cnt,sonar=0;
+char color,angle,dir,dir_con=0;
 static int mode=0;
 rgb_raw_t rgb;
 static int start_f = 1,turn0_f = 0,turn1_f = 1,turn2_f = 1,turn3_f = 1;
@@ -12,7 +12,7 @@ static int brt, get_brt[10] = {0}, brt_cnt = 0;
 int sum_brt, i;
 
 Tracer::Tracer():
-  leftWheel(PORT_C), rightWheel(PORT_B), centralWheel(PORT_A), colorSensor(PORT_2), gyrosensor(PORT_4) { // <2>
+  leftWheel(PORT_C), rightWheel(PORT_B), colorSensor(PORT_2), gyrosensor(PORT_4) { // <2>
   }
 
 void Tracer::init() {
@@ -61,7 +61,7 @@ void Tracer::run() {
   }
 //  sonar = sonarsensor.getDistance();
 
-  //mode:0(青線を探すLook for the blue line)
+  //mode:0
   if(mode==0){
     if(color=='B'){
       printf("\n***mode:1!!***\nleft:%d right:%d\n",left_cnt,right_cnt);
@@ -81,12 +81,11 @@ void Tracer::run() {
       }
     }
   }
-  //mode:1(直進Straight)
+  //mode:1
   if(mode==1){
     if(t%MOT_CON==0){
-      if(left_cnt>1500){
-        if(angle>-4 && angle<4)
-          run_straight(30);
+      if(left_cnt>1500 && (angle>-4 && angle<4) ){
+        run_straight(30);
       }
       else {
         if(color!='B'&&color!='K'){
@@ -109,7 +108,7 @@ void Tracer::run() {
     }
   }
 
-  //mode:2(右に曲がるTurn right)
+  //mode:2
   if(mode==2 && angle>80 && turn1_f){
       printf("\n***mode:3!!***\nleft:%d right:%d\n",left_cnt,right_cnt);
       printf("red:%d green:%d blue:%d color:%c angle:%d\n\n",rgb.r,rgb.g,rgb.b,color,angle);
@@ -117,7 +116,7 @@ void Tracer::run() {
     mode=3;
     left=60,right=60;
   }
-  //mode:3(横断走行Crossing)
+  //mode:3
   if(mode==3 && t%MOT_CON==0){
     if(angle<87 || angle>93 )
       angle_fix(60,90,0);
@@ -130,7 +129,7 @@ void Tracer::run() {
       }
     }
   }
-  //mode:4(左に曲がるTurn left)
+  //mode:4
   if(turn2_f && left_cnt>4000 && color=='K'){
     mode=4;
     left =-15 ,right = 45;
@@ -143,7 +142,7 @@ void Tracer::run() {
     left = 60,right = 60;
     dir_con=5;
   }
-  //mode:5(ライントレースで進むProceed with line tracing)
+  //mode:5
   if(mode==5 && t%MOT_CON==0){
     if(color=='K'){
       run_straight(60);
@@ -202,8 +201,8 @@ void angle_fix(int spd,int ag,int type)
     if(left>right){
       run_straight(spd);
     }
-    left-=1;
-    right+=1;
+    left-=2;
+    right+=2;
     dir_con++;
   }
   //left->right
@@ -211,14 +210,13 @@ void angle_fix(int spd,int ag,int type)
     if(left<right){
       run_straight(spd);
     }
-    left+=1;
-    right-=1;
+    left+=2;
+    right-=2;
     dir_con--;
   }
 }
-//まっすぐタイヤ調整
 void run_straight(int spd)
 {
-  left=spd+(dir_con*2/3),right=spd-(dir_con*2/3);
+  left=spd+dir_con,right=spd-dir_con;
   dir_con = dir_con/2;
 }
