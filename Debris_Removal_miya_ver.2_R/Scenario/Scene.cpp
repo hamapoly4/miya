@@ -48,7 +48,7 @@ Scene::Scene(unsigned char scene_no)
 			break;
 			
 		default:
-			for(i=0;i<150000;i++){
+			for(i=0;i<200000;i++){
 				mRun[mcurrent_scene_no] = new StraRun(0);
 			}
 			break;
@@ -58,14 +58,14 @@ Scene::Scene(unsigned char scene_no)
 	switch (mcurrent_scene_no)
 	{
 		case 0:
-			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 140);	//start
+			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 340);	//start
 			break;
 		case 12:
 		case 30:
 		case 36:
 		case 42:
 		case 48:
-			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 395);	//1block	block*360+35
+			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 385);	//1block	block*360+35
 			break;
 		case 24:
 			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 755);	//2block
@@ -91,18 +91,20 @@ Scene::Scene(unsigned char scene_no)
 			break;
 			
 		case 4:
+			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent2(LEFT, 72);
+			break;
 		case 22:
 		case 28:
 		case 34:
 		case 52:
-			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent2(LEFT, 76);
+			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent2(LEFT, 80);
 			break;
 		
 		case 10:
 		case 16:
 		case 40:
 		case 46:
-			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent2(RIGHT, 74);
+			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent2(RIGHT, 85);
 			break;
 		
 		default:

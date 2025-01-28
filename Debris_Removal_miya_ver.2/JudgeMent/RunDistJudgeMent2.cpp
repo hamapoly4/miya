@@ -21,13 +21,13 @@ bool RunDistJudgeMent2::judge()
 	
 	if(mtire == LEFT)
 	{
-		if (mcurrent_dist1 >= mtarget_dist1 && mcurrent_dist2 <= mtarget_dist2)
+		if (mcurrent_dist1 >= mtarget_dist1)
 		{
 			printf("%fmm走った！！\n", mcurrent_dist2);
 			return true;
 		}
 	}
-	else if (mcurrent_dist1 <= mtarget_dist2 && mcurrent_dist2 >= mtarget_dist1)
+	else if (mcurrent_dist2 >= mtarget_dist1)
 	{
 		printf("%fmm走った！！\n", mcurrent_dist1);
 		return true;

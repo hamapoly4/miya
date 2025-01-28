@@ -65,7 +65,7 @@ Scene::Scene(unsigned char scene_no)
 		case 36:
 		case 42:
 		case 48:
-			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 395);	//1block	block*360+35
+			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 385);	//1block	block*360+35
 			break;
 		case 24:
 			mJudgeMent[mcurrent_scene_no] = new RunDistJudgeMent(BOTH, 755);	//2block
