@@ -1,9 +1,9 @@
 mkfile_path := $(dir $(lastword $(MAKEFILE_LIST)))
 
+APPL_COBJS +=
+
 APPL_CXXOBJS += \
-	LineTracer.o \
-	CalcPID.o \
-	Runner.o
+	util.o
 
 SRCLANG := c++
 
@@ -16,6 +16,4 @@ endif
 
 APPL_DIRS += $(mkfile_path)app $(mkfile_path)unit
 
-INCLUDES += \
-	-I$(mkfile_path)app \
-	-I$(mkfile_path)unit
+# COPTS += -fno-use-cxa-atexit

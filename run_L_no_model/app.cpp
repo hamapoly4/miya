@@ -10,6 +10,7 @@
 
 #include "ColorSensor.h"
 #include "SonarSensor.h"
+#include "GyroSensor.h"
 #include "Motor.h"
 
 /* 名前空間ev3apiを使用する */
@@ -20,12 +21,13 @@ using namespace ev3api;
 *-----------------------------*/
 ColorSensor gColorSensor(PORT_2);
 SonarSensor gSonarSensor(PORT_3);
+GyroSensor  gGyroSensor(PORT_4);
 Motor       gLeftWheel(PORT_C);
 Motor       gRightWheel(PORT_B);
 
-Calculation gCalculation(gColorSensor);
-Walker gWalker(gLeftWheel, gRightWheel);
-Runner gRunner(gSonarSensor, gCalculation, gWalker);
+CalcPID gCalcPID(gColorSensor);
+LineTracer gLineTracer(gLeftWheel, gRightWheel);
+Runner gRunner(gSonarSensor, gGyroSensor, gCalcPID, gLineTracer);
 
 /*----------------------------------------------------
 *                      内部結合
@@ -63,7 +65,15 @@ void main_task(intptr_t unused)
 *-----------------------------------------------------*/
 void runner_task(intptr_t exinf)
 {
-    gRunner.runL();
+    /*ラージハブの右ボタンが押下されたら判定 */
+    if (ev3_button_is_pressed(RIGHT_BUTTON))
+    {
+        wup_tsk(MAIN_TASK);     // メインタスクの起床
+    }
+    else
+    {
+        gRunner.runL();     // L字走行
+    }
 
     ext_tsk();
 }

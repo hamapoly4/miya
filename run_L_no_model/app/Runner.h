@@ -10,32 +10,39 @@
 
 /* ヘッダファイルのインクルード */
 #include "SonarSensor.h"
-#include "Calculation.h"
-#include "Walker.h"
+#include "GyroSensor.h"
+#include "CalcPID.h"
+#include "LineTracer.h"
 
 /*----------------------------------------------------
 *                  Runnerクラスの定義
 *-----------------------------------------------------*/
 class Runner {
 private:
+    static const unsigned char TARGET;
     const ev3api::SonarSensor& mSonarSensor;    /* 超音波センサのconst参照オブジェクト */
-    Calculation& mCalculation;
-    Walker& mWalker;
+    ev3api::GyroSensor& mGyroSensor;
+    CalcPID& mCalcPID;
+    LineTracer& mLineTracer;
 
     /* メンバ変数宣言 */
-    unsigned char mstrflg;   /* 走行開始フラグ */
+    unsigned char mrunline_flg = false;     // ライントレース走行開始フラグは降りた状態で定義
+    unsigned char mrunstra_flg = false;     // 直進走行開始フラグは降りた状態で定義
 
 public:
     /* コンストラクタ宣言 */
-    Runner(const ev3api::SonarSensor& sonarsensor,
-            Calculation& calculation, Walker& walker);
+    Runner(const ev3api::SonarSensor& sonarsensor, ev3api::GyroSensor& gyrosensor,
+                CalcPID& calcpid, LineTracer& linetracer);
 
     
     /* L字走行をするメンバ関数宣言 */
     void runL();
 
-    /* 走行開始の判断をするメンバ関数宣言 */
-    bool runStart();
+    /* ライントレース走行開始の判断をするメンバ関数宣言 */
+    void runLineStart();
+
+    /* 直進走行開始の判断をするメンバ関数宣言 */
+    void runStraStart();
 };
 
 #endif  // EV3_APP_RUNNER_H_

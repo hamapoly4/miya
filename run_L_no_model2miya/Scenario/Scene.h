@@ -18,8 +18,8 @@ private:
 
 	enum eColor { BLACK, BLUE, };
 
-	Run* mRun[21];
-	JudgeMent* mJudgeMent[21];
+	Run* mRun[31];
+	JudgeMent* mJudgeMent[31];
 
 	unsigned char mcurrent_scene_no;
 
